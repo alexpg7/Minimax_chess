@@ -22,15 +22,25 @@ void	ft_initmlx(t_vars *vars)
 		perror("mlx address get");
 		exit_chess(vars, 1);
 	}
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	print_full_board(vars);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	mlx_key_hook(vars->win, key_hook, vars);
 	mlx_mouse_hook(vars->win, mouse_hook, vars);
 	mlx_hook(vars->win, 17, 0L, exit_chess, vars);
 	mlx_hook(vars->win, 6, 1L<<6, mouse_move, vars);
 	mlx_mouse_hide(vars->mlx, vars->win); //PRODUCES LEAKS
 	printf("Click the cross to exit the program.\n\n");
+	vars->mode = 'f';
 	mlx_loop(vars->mlx);
+}
+
+int	ft_lim(int x)
+{
+	if (x < 0)
+		return (42);
+	if (x > 7)
+		return (42);
+	return (0);
 }
 
 static void	ft_fill(t_vars *vars, char *str, int j)
@@ -87,6 +97,8 @@ int	main(void)
 	vars.tex->king = &king;
 	vars.tex->pawn = &pawn;
 	vars.tex->mouse = &mouse;
+	vars.sx = 0;
+	vars.sy = 0;
 	ft_init(&vars); //more things, ask parameters, etc.
 	ft_initmlx(&vars);
 	return (0);

@@ -48,9 +48,9 @@ void	print_object(int x, int y, t_vars *vars, char o)
 	else
 	{
 		if ((cx + cy) % 2 == 0)
-			pixel_put(vars, x, y, WHITE);
+			pixel_put2(vars, x, y, WHITE);
 		else
-			pixel_put(vars, x, y, BLACK);
+			pixel_put2(vars, x, y, BLACK);
 	}
 }
 
@@ -66,9 +66,27 @@ void	print_board(int x, int y, t_vars *vars)
 	else
 	{
 		if ((cx + cy) % 2 == 0)
-			pixel_put(vars, x, y, WHITE);
+			pixel_put2(vars, x, y, WHITE);
 		else
-			pixel_put(vars, x, y, BLACK);
+			pixel_put2(vars, x, y, BLACK);
+	}
+}
+
+void	print_square(int x, int y, t_vars *vars)
+{
+	int	i;
+	int	j;
+
+	i = x;
+	while (i < x + 100)
+	{
+		j = y;
+		while (j < y + 100)
+		{
+			print_board(i, j, vars);
+			j++;
+		}
+		i++;
 	}
 }
 

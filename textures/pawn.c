@@ -12,6 +12,40 @@ static void	fill_tex(t_vars *vars, char *src, int i)
 	vars->tex->pawn->mat[i][j] = '\0';
 }
 
+void	fill_pawn(int x, int y, t_vars *vars)
+{
+	int	first;
+	int	i;
+	int	j;
+
+	first = (y == 6);
+	j = y;
+	i = x;
+	while (j > y - 2 - first && j >= 0)
+	{
+		if (vars->board[j][i] == ' ') //should be letter (white or black)
+		{
+			vars->board2[j][i] = 'A';
+			print_square(100 * i, 100 * j, vars);
+		}
+		j--;
+	}
+	j = y - 1;
+	i = x + 1;
+	if (vars->board[j][i] >= 'A' && vars->board[j][i] <= 'Z')
+	{
+		vars->board2[j][i] = 'A';
+		print_square(100 * i, 100 * j, vars);
+	}
+	j = y - 1;
+	i = x - 1;
+	if (vars->board[j][i] >= 'A' && vars->board[j][i] <= 'Z')
+	{
+		vars->board2[j][i] = 'A';
+		print_square(100 * i, 100 * j, vars);
+	}
+}
+
 void	ft_pawn(t_vars *vars)
 {;
 	fill_tex(vars, "     MMMM     ", 0);

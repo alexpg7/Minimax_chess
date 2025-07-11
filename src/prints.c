@@ -8,9 +8,45 @@ void	pixel_put(t_vars *vars, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+int	color_mix(int color, int color2)
+{
+	unsigned int r1 = (color >> 16) & 0xFF;
+    unsigned int g1 = (color >> 8) & 0xFF;
+    unsigned int b1 = color & 0xFF;
+
+    unsigned int r2 = (color2 >> 16) & 0xFF;
+    unsigned int g2 = (color2 >> 8) & 0xFF;
+    unsigned int b2 = color2 & 0xFF;
+
+	if (color2 == 0)
+		return (color);
+	else
+	{
+		r1 = (2 * r1 + r2) / 3;
+		g1 = (2 * g1 + g2) / 3;
+		b1 = (2 * b1 + b2) / 3;
+		return ((r1 << 16) | (g1 << 8) | b1);
+	}
+}
+
+void	pixel_put2(t_vars *vars, int x, int y, int color)
+{
+	char	*dst;
+	char	c;
+	int		k = 0;
+
+	c = vars->board2[8 * y / Y][8 * x / X];
+	if (c == 'S')
+		k = SC;
+	if (c == 'A')
+		k = AC;
+	dst = vars->addr + y * vars->line_length + x * vars->bits_per_pixel / 8;
+	*(unsigned int *)dst = color_mix(color, k);
+}
+
 int	ft_inmouse(int x, int y)
 {
-	if (x >= 0 && x <= MSIZE && y >= 0 && y <= MSIZE)
+	if (x >= 0 && x <= 3 * MSIZE / 2 && y >= 0 && y <= MSIZE)
 		return (1);
 	else
 		return (0);

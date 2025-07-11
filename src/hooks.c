@@ -17,10 +17,8 @@ int	exit_chess(t_vars *vars, int ex)
 
 int	mouse_hook(int code, int x, int y, t_vars *vars)
 {
-	if (code && vars)
-		ft_printf("x: %i\ny: %i\n", x, y);
-	else
-		ft_printf("x: %i\ny: %i\n", x, y);
+	if (code == 1)
+		ft_select(x, y, vars);
 	return (0);
 }
 

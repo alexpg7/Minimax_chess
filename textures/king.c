@@ -12,6 +12,35 @@ static void	fill_tex(t_vars *vars, char *src, int i)
 	vars->tex->king->mat[i][j] = '\0';
 }
 
+void	fill_king(int x, int y, t_vars *vars)
+{
+	int		i;
+	int		j;
+	char	c ;
+
+	i = -1;
+	while (i < 2)
+	{
+		j = -1;
+		while (j < 2)
+		{
+			c = vars->board[j + y][i + x];
+			if ((i == 0 && j == 0) || ft_lim(x + i) == 42 || ft_lim(y + j) == 42)
+			{
+				j++;
+				continue ;// SHOULD INCORPORATE A RED TILE WITH DANGEROUS TILES
+			}
+			if (c == ' ' || (c <= 'Z' && c >= 'A'))
+			{
+				vars->board2[j + y][i + x] = 'A';
+				print_square(100 * (i + x), 100 * (j + y), vars);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	ft_king(t_vars *vars)
 {;
 	fill_tex(vars, "      MM      ", 0);
